@@ -1,6 +1,6 @@
 from palavras import lista_palavras, sortear_palavras
 from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro
-
+from tabuleiro import revelar_palavra
 
 def main():
     print("=" * 40)
@@ -22,6 +22,11 @@ def main():
     print("\n--- VISÃO DO MESTRE ---")
     exibir_tabuleiro(tabuleiro, modo_mestre=True)
 
+    palpite = input("Digite a palavra que deseja palpitar: ")
 
-if __name__ == "__main__":
-    main()
+    resultado = revelar_palavra(tabuleiro, palpite)
+
+    print("Resultado:", resultado)
+    exibir_tabuleiro(tabuleiro, modo_mestre=False)
+
+main()

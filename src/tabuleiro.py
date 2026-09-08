@@ -86,7 +86,6 @@ def revelar_palavra(tabuleiro, palavra_buscada):
                     carta["revelada"] = True
                     return carta["categoria"]
                 else:
-                    return "ja_revelada"
-    return "nao_encontrada"
-
+                    return f"A palavra '{palavra_buscada}' ja foi revelada"
+    return f"A palavra '{palavra_buscada}' nao foi encontrada"
 

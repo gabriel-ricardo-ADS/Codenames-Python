@@ -1,4 +1,5 @@
 from palavras import lista_palavras, sortear_palavras
+from tabuleiro import estrutura_tabuleiro, gerar_categorias
 
 
 def main():
@@ -15,6 +16,10 @@ def main():
     print("\nPalavras sorteadas:")
     print(palavras_partida)
 
+    categorias_geradas = gerar_categorias(False, True)
+
+    est_gerada = estrutura_tabuleiro(palavras_partida, categorias_geradas)
+    print(est_gerada)
 
 if __name__ == "__main__":
     main()

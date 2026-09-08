@@ -1,15 +1,5 @@
 from random import shuffle
 
-def estrutura_tabuleiro():
-    matriz = []
-    for l in range(5):
-        linha = []
-        for j in range(5):
-            cat_vazia = " "
-            linha.append(cat_vazia)
-        matriz.append(linha)
-    return matriz
-
 def gerar_categorias(jogador_azul,jogador_vermelho):
     lista_cat = ["assasino"]
     if jogador_azul:
@@ -29,4 +19,18 @@ def gerar_categorias(jogador_azul,jogador_vermelho):
 
     return lista_cat
 
-
+def estrutura_tabuleiro(palavras, categorias):
+    matriz = []
+    indice = 0
+    for l in range(5):
+        linha = []
+        for j in range(5):
+            carta = {
+                "palavra": palavras[indice],
+                "categoria": categorias[indice],
+                "revelada": False
+            }
+            linha.append(carta)
+            indice += 1
+        matriz.append(linha)
+    return matriz

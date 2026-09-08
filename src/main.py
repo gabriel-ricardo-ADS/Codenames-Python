@@ -1,5 +1,5 @@
 from palavras import lista_palavras, sortear_palavras
-from tabuleiro import estrutura_tabuleiro, gerar_categorias
+from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro
 
 
 def main():
@@ -12,14 +12,16 @@ def main():
     input("\nPressione Enter para iniciar...")
 
     palavras_partida = sortear_palavras(lista_palavras, 25)
-
-    print("\nPalavras sorteadas:")
-    print(palavras_partida)
-
     categorias_geradas = gerar_categorias(False, True)
 
-    est_gerada = estrutura_tabuleiro(palavras_partida, categorias_geradas)
-    print(est_gerada)
+    tabuleiro = estrutura_tabuleiro(palavras_partida, categorias_geradas)
+
+    print("\n--- VISÃO DOS JOGADORES ---")
+    exibir_tabuleiro(tabuleiro, modo_mestre=False)
+
+    print("\n--- VISÃO DO MESTRE ---")
+    exibir_tabuleiro(tabuleiro, modo_mestre=True)
+
 
 if __name__ == "__main__":
-    main()
+    main()

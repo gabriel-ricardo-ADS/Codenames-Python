@@ -1,7 +1,7 @@
 from palavras import lista_palavras, sortear_palavras
 from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro
 from tabuleiro import revelar_palavra
-from jogo import trocar_turno, verificar_palpite, verificar_vitoria
+from jogo import trocar_turno, verificar_palpite, verificar_vitoria, menu_inicial
 
 def main():
     print("=" * 40)
@@ -10,7 +10,21 @@ def main():
 
     print("\nBem-vindo ao Codenames!")
 
-    input("\nPressione Enter para iniciar...")
+    opcao = menu_inicial(["1", "2", "0"])
+
+    while opcao == "2":
+        print("\n=== COMO JOGAR ===")
+        print("Duas equipes disputam para descobrir suas palavras.")
+        print("O mestre fornece uma pista e uma quantidade.")
+        print("A equipe tenta encontrar as palavras relacionadas à pista.")
+        print("Palavras neutras ou adversárias encerram o turno.")
+        print("Quem revelar o assassino perde imediatamente.")
+
+        opcao = menu_inicial(["1", "2", "0"])
+
+    if opcao == "0":
+        print("\nJogo encerrado.")
+        return
 
     palavras_partida = sortear_palavras(lista_palavras, 25)
     categorias_geradas = gerar_categorias(False, True)

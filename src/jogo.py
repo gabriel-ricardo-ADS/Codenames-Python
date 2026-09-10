@@ -29,3 +29,17 @@ def verificar_vitoria(tabuleiro, equipe):
                 return False
 
     return True
+
+def menu_inicial(opcoes_validas):
+    while True:
+        print("\n=== MENU PRINCIPAL ===")
+        print("1 - Iniciar partida")
+        print("2 - Como jogar")
+        print("0 - Sair")
+
+        opcao = input("Escolha uma opção: ").strip()
+
+        if opcao in opcoes_validas:
+            return opcao
+
+        print("Opção inválida. Tente novamente.")

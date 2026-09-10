@@ -32,7 +32,32 @@ def main():
     while jogo_ativo:
         print(f"\nTurno da equipe: {equipe_atual.upper()}")
 
-        palpite = input("Digite a palavra que deseja palpitar: ")
+        pista = input("Digite a pista: ").strip()
+
+        while True:
+            try:
+                quantidade = int(input("Quantidade de palavras relacionadas à pista: "))
+
+                if quantidade <= 0:
+                    print("Digite uma quantidade maior que zero.")
+                else:
+                    break
+
+            except ValueError:
+                print("Digite apenas números.")
+
+        palpites_restantes = quantidade + 1
+
+        while palpites_restantes > 0 and jogo_ativo:
+            print(f"\nPista: {pista.upper()} | Palpites restantes: {palpites_restantes}")
+
+            palpite = input("Digite uma palavra ou 'passar' para encerrar o turno: ").strip()
+
+            if palpite.lower() == "passar":
+                equipe_atual = trocar_turno(equipe_atual)
+                print(f"\nTurno encerrado.")
+                print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+            break
 
         resultado = revelar_palavra(tabuleiro, palpite)
         resultado_palpite = verificar_palpite(resultado, equipe_atual)
@@ -43,8 +68,18 @@ def main():
             if verificar_vitoria(tabuleiro, equipe_atual):
                 print(f"A equipe {equipe_atual.upper()} venceu!")
                 jogo_ativo = False
+
             else:
-                print("A equipe pode continuar jogando.")
+                palpites_restantes -= 1
+
+                if palpites_restantes == 0:
+                    print("\nLimite de palpites atingido.")
+
+                    equipe_atual = trocar_turno(equipe_atual)
+
+                    print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+                else:
+                    print("A equipe pode continuar jogando.")
 
         elif resultado_palpite == "fim_turno":
             equipe_adversaria = trocar_turno(equipe_atual)

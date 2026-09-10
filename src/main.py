@@ -47,12 +47,19 @@ def main():
                 print("A equipe pode continuar jogando.")
 
         elif resultado_palpite == "fim_turno":
-            print("\nFim do turno.")
+            equipe_adversaria = trocar_turno(equipe_atual)
 
-            equipe_atual = trocar_turno(equipe_atual)
+            if verificar_vitoria(tabuleiro, equipe_adversaria):
+                print(f"\nA última palavra da equipe {equipe_adversaria.upper()} foi revelada!")
+                print(f"A equipe {equipe_adversaria.upper()} venceu!")
+                jogo_ativo = False
 
-            print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+            else:
+                print("\nFim do turno.")
 
+                equipe_atual = equipe_adversaria
+
+                print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
         elif resultado_palpite == "derrota":
             print(f"\nA equipe {equipe_atual.upper()} encontrou o ASSASSINO!")
             print("Fim de jogo.")

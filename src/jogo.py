@@ -1,0 +1,23 @@
+def trocar_turno(equipe_atual):
+    if equipe_atual == "vermelho":
+        return "azul"
+
+    if equipe_atual == "azul":
+        return "vermelho"
+
+    raise ValueError("Equipe inválida.")
+
+def verificar_palpite(categoria, equipe_atual):
+    if categoria == equipe_atual:
+        return "acerto"
+
+    if categoria == "neutro":
+        return "fim_turno"
+
+    if categoria == "assasino":
+        return "derrota"
+
+    if categoria in ["vermelho", "azul"]:
+        return "fim_turno"
+
+    return "invalido"

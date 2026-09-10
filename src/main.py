@@ -1,6 +1,7 @@
 from palavras import lista_palavras, sortear_palavras
 from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro
 from tabuleiro import revelar_palavra
+from jogo import trocar_turno, verificar_palpite
 
 def main():
     print("=" * 40)
@@ -16,6 +17,10 @@ def main():
 
     tabuleiro = estrutura_tabuleiro(palavras_partida, categorias_geradas)
 
+    equipe_atual = "vermelho"
+
+    print(f"\nTurno da equipe: {equipe_atual.upper()}")
+
     print("\n--- VISÃO DOS JOGADORES ---")
     exibir_tabuleiro(tabuleiro, modo_mestre=False)
 
@@ -26,7 +31,22 @@ def main():
 
     resultado = revelar_palavra(tabuleiro, palpite)
 
-    print("Resultado:", resultado)
+    resultado_palpite = verificar_palpite(resultado, equipe_atual)
+
+    if resultado_palpite == "acerto":
+        print(f"\nAcertou uma palavra da equipe {equipe_atual.upper()}!")
+
+    elif resultado_palpite == "fim_turno":
+        print("\nFim do turno.")
+
+        equipe_atual = trocar_turno(equipe_atual)
+
+        print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+
+    elif resultado_palpite == "derrota":
+        print(f"\nA equipe {equipe_atual.upper()} encontrou o ASSASSINO!")
+        print("Fim de jogo.")
+    
     exibir_tabuleiro(tabuleiro, modo_mestre=False)
 
 main()

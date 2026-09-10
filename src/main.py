@@ -1,12 +1,14 @@
 import os
+
 from palavras import lista_palavras, sortear_palavras
-from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro
-from tabuleiro import revelar_palavra
+from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro, revelar_palavra
 from jogo import trocar_turno, verificar_palpite, verificar_vitoria, menu_inicial, limpar_tela
+from jogadores import cadastrar_jogadores, dividir_equipes, escolher_mestre, definir_equipe_inicial, VERDE, RESET
+
 
 def main():
     print("=" * 40)
-    print("          CODENAMES - PYTHON")
+    print(f"          CODENAMES - {VERDE}PYTHON{RESET}")
     print("=" * 40)
 
     print("\nBem-vindo ao Codenames!")
@@ -27,12 +29,32 @@ def main():
         print("\nJogo encerrado.")
         return
 
+    # Cadastro dos jogadores
+    jogadores = cadastrar_jogadores()
+
+    # Divisão das equipes
+    equipe_vermelha, equipe_azul = dividir_equipes(jogadores)
+
+    # Escolha dos mestres-espiões
+    mestre_vermelho = escolher_mestre(equipe_vermelha, "VERMELHA")
+    mestre_azul = escolher_mestre(equipe_azul, "AZUL")
+
+    # Sorteia quem inicia o jogo
+    equipe_inicial = definir_equipe_inicial()
+
+    # Sorteia as palavras da partida
     palavras_partida = sortear_palavras(lista_palavras, 25)
-    categorias_geradas = gerar_categorias(False, True)
 
+    # Define as categorias e equipe atual de acordo com quem começa
+    if equipe_inicial == "VERMELHA":
+        categorias_geradas = gerar_categorias(False, True)
+        equipe_atual = "vermelho"
+    else:
+        categorias_geradas = gerar_categorias(True, False)
+        equipe_atual = "azul"
+
+    # Cria o tabuleiro
     tabuleiro = estrutura_tabuleiro(palavras_partida, categorias_geradas)
-
-    equipe_atual = "vermelho"
 
     jogo_ativo = True
 
@@ -47,7 +69,7 @@ def main():
 
         limpar_tela(os.name)
 
-        print(f"\n--- MAPA DOS MESTRES ---")
+        print("\n--- MAPA DOS MESTRES ---")
         exibir_tabuleiro(tabuleiro, modo_mestre=True)
 
         print(f"\nTurno da equipe {equipe_atual.upper()}.")
@@ -73,7 +95,7 @@ def main():
         limpar_tela(os.name)
 
         print("=" * 55)
-        print("JOGADORES PODEM OLHAR")
+        print("              JOGADORES PODEM OLHAR")
         print("=" * 55)
 
         print(f"\nEquipe da vez: {equipe_atual.upper()}")
@@ -132,8 +154,7 @@ def main():
 
                     equipe_atual = equipe_adversaria
 
-                    print(
-                        f"Agora é a vez da equipe {equipe_atual.upper()}.")
+                    print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
 
                 break
 
@@ -148,5 +169,6 @@ def main():
 
             exibir_tabuleiro(tabuleiro, modo_mestre=False)
 
-if __name__ == "__main__": #mais seguro de rodar o main para em caso de import do main ele nao rodar automaticamente, mas sim apenas quando for chamado diretamente
+
+if __name__ == "__main__":
     main()

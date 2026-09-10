@@ -27,26 +27,36 @@ def main():
     print("\n--- VISÃO DO MESTRE ---")
     exibir_tabuleiro(tabuleiro, modo_mestre=True)
 
-    palpite = input("Digite a palavra que deseja palpitar: ")
+    jogo_ativo = True
 
-    resultado = revelar_palavra(tabuleiro, palpite)
+    while jogo_ativo:
+        print(f"\nTurno da equipe: {equipe_atual.upper()}")
 
-    resultado_palpite = verificar_palpite(resultado, equipe_atual)
+        palpite = input("Digite a palavra que deseja palpitar: ")
 
-    if resultado_palpite == "acerto":
-        print(f"\nAcertou uma palavra da equipe {equipe_atual.upper()}!")
+        resultado = revelar_palavra(tabuleiro, palpite)
+        resultado_palpite = verificar_palpite(resultado, equipe_atual)
 
-    elif resultado_palpite == "fim_turno":
-        print("\nFim do turno.")
+        if resultado_palpite == "acerto":
+            print(f"\nAcertou uma palavra da equipe {equipe_atual.upper()}!")
+            print("A equipe pode continuar jogando.")
 
-        equipe_atual = trocar_turno(equipe_atual)
+        elif resultado_palpite == "fim_turno":
+            print("\nFim do turno.")
 
-        print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+            equipe_atual = trocar_turno(equipe_atual)
 
-    elif resultado_palpite == "derrota":
-        print(f"\nA equipe {equipe_atual.upper()} encontrou o ASSASSINO!")
-        print("Fim de jogo.")
-    
-    exibir_tabuleiro(tabuleiro, modo_mestre=False)
+            print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+
+        elif resultado_palpite == "derrota":
+            print(f"\nA equipe {equipe_atual.upper()} encontrou o ASSASSINO!")
+            print("Fim de jogo.")
+
+            jogo_ativo = False
+
+        elif resultado_palpite == "invalido":
+            print(f"\n{resultado}")
+
+        exibir_tabuleiro(tabuleiro, modo_mestre=False)
 
 main()

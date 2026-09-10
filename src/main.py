@@ -1,7 +1,8 @@
+import os
 from palavras import lista_palavras, sortear_palavras
 from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro
 from tabuleiro import revelar_palavra
-from jogo import trocar_turno, verificar_palpite, verificar_vitoria, menu_inicial
+from jogo import trocar_turno, verificar_palpite, verificar_vitoria, menu_inicial, limpar_tela
 
 def main():
     print("=" * 40)
@@ -33,18 +34,27 @@ def main():
 
     equipe_atual = "vermelho"
 
-    print("\n--- VISÃO DOS JOGADORES ---")
-    exibir_tabuleiro(tabuleiro, modo_mestre=False)
-
-    print("\n--- VISÃO DO MESTRE ---")
-    exibir_tabuleiro(tabuleiro, modo_mestre=True)
-
     jogo_ativo = True
 
     while jogo_ativo:
-        print(f"\nTurno da equipe: {equipe_atual.upper()}")
+        limpar_tela(os.name)
 
-        pista = input("Digite a pista: ").strip()
+        print("=" * 55)
+        print("      ATENÇÃO: SOMENTE OS MESTRES PODEM OLHAR!")
+        print("=" * 55)
+
+        input("\nQuando somente os mestres estiverem olhando, pressione Enter...")
+
+        limpar_tela(os.name)
+
+        print(f"\n--- MAPA DOS MESTRES ---")
+        exibir_tabuleiro(tabuleiro, modo_mestre=True)
+
+        print(f"\nTurno da equipe {equipe_atual.upper()}.")
+
+        pista = input(
+            f"Mestre da equipe {equipe_atual.upper()}, digite a pista: "
+        ).strip()
 
         while True:
             try:
@@ -59,6 +69,20 @@ def main():
                 print("Digite apenas números.")
 
         palpites_restantes = quantidade + 1
+
+        input("\nMestres, pressionem Enter quando estiverem prontos para entregar a tela aos jogadores...")
+
+        limpar_tela(os.name)
+
+        print("=" * 55)
+        print("JOGADORES PODEM OLHAR")
+        print("=" * 55)
+
+        print(f"\nEquipe da vez: {equipe_atual.upper()}")
+        print(f"Pista: {pista.upper()} | Quantidade: {quantidade}")
+
+        print("\n--- TABULEIRO ---")
+        exibir_tabuleiro(tabuleiro, modo_mestre=False)
 
         while palpites_restantes > 0 and jogo_ativo:
             print(

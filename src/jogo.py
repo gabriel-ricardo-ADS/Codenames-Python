@@ -1,3 +1,5 @@
+import os
+
 def trocar_turno(equipe_atual):
     if equipe_atual == "vermelho":
         return "azul"
@@ -43,3 +45,11 @@ def menu_inicial(opcoes_validas):
             return opcao
 
         print("Opção inválida. Tente novamente.")
+
+def limpar_tela(sistema_operacional):
+    if sistema_operacional == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+    return True

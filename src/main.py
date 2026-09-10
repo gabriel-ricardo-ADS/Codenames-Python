@@ -33,8 +33,6 @@ def main():
 
     equipe_atual = "vermelho"
 
-    print(f"\nTurno da equipe: {equipe_atual.upper()}")
-
     print("\n--- VISÃO DOS JOGADORES ---")
     exibir_tabuleiro(tabuleiro, modo_mestre=False)
 
@@ -149,4 +147,5 @@ def main():
 
             exibir_tabuleiro(tabuleiro, modo_mestre=False)
 
-main()
+if __name__ == "__main__": #mais seguro de rodar o main para em caso de import do main ele nao rodar automaticamente, mas sim apenas quando for chamado diretamente
+    main()

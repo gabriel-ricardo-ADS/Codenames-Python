@@ -49,61 +49,90 @@ def main():
         palpites_restantes = quantidade + 1
 
         while palpites_restantes > 0 and jogo_ativo:
-            print(f"\nPista: {pista.upper()} | Palpites restantes: {palpites_restantes}")
+            print(
+                f"\nPista: {pista.upper()} | "
+                f"Palpites restantes: {palpites_restantes}"
+            )
 
-            palpite = input("Digite uma palavra ou 'passar' para encerrar o turno: ").strip()
+            palpite = input(
+                "Digite uma palavra ou 'passar' para encerrar o turno: "
+            ).strip()
 
             if palpite.lower() == "passar":
                 equipe_atual = trocar_turno(equipe_atual)
-                print(f"\nTurno encerrado.")
+
+                print("\nTurno encerrado.")
                 print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
-            break
 
-        resultado = revelar_palavra(tabuleiro, palpite)
-        resultado_palpite = verificar_palpite(resultado, equipe_atual)
+                break
 
-        if resultado_palpite == "acerto":
-            print(f"\nAcertou uma palavra da equipe {equipe_atual.upper()}!")
+            resultado = revelar_palavra(tabuleiro, palpite)
+            resultado_palpite = verificar_palpite(resultado, equipe_atual)
 
-            if verificar_vitoria(tabuleiro, equipe_atual):
-                print(f"A equipe {equipe_atual.upper()} venceu!")
-                jogo_ativo = False
+            if resultado_palpite == "acerto":
+                print(
+                    f"\nAcertou uma palavra da equipe "
+                    f"{equipe_atual.upper()}!"
+                )
 
-            else:
-                palpites_restantes -= 1
+                if verificar_vitoria(tabuleiro, equipe_atual):
+                    print(f"A equipe {equipe_atual.upper()} venceu!")
+                    jogo_ativo = False
 
-                if palpites_restantes == 0:
-                    print("\nLimite de palpites atingido.")
-
-                    equipe_atual = trocar_turno(equipe_atual)
-
-                    print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
                 else:
-                    print("A equipe pode continuar jogando.")
+                    palpites_restantes -= 1
 
-        elif resultado_palpite == "fim_turno":
-            equipe_adversaria = trocar_turno(equipe_atual)
+                    if palpites_restantes == 0:
+                        print("\nLimite de palpites atingido.")
 
-            if verificar_vitoria(tabuleiro, equipe_adversaria):
-                print(f"\nA última palavra da equipe {equipe_adversaria.upper()} foi revelada!")
-                print(f"A equipe {equipe_adversaria.upper()} venceu!")
+                        equipe_atual = trocar_turno(equipe_atual)
+
+                        print(
+                            f"Agora é a vez da equipe "
+                            f"{equipe_atual.upper()}."
+                        )
+
+                    else:
+                        print("A equipe pode continuar jogando.")
+
+            elif resultado_palpite == "fim_turno":
+                equipe_adversaria = trocar_turno(equipe_atual)
+
+                if verificar_vitoria(tabuleiro, equipe_adversaria):
+                    print(
+                        f"\nA última palavra da equipe "
+                        f"{equipe_adversaria.upper()} foi revelada!"
+                    )
+                    print(
+                        f"A equipe {equipe_adversaria.upper()} venceu!"
+                    )
+
+                    jogo_ativo = False
+
+                else:
+                    print("\nFim do turno.")
+
+                    equipe_atual = equipe_adversaria
+
+                    print(
+                        f"Agora é a vez da equipe "
+                        f"{equipe_atual.upper()}."
+                    )
+
+                break
+
+            elif resultado_palpite == "derrota":
+                print(
+                    f"\nA equipe {equipe_atual.upper()} "
+                    "encontrou o ASSASSINO!"
+                )
+                print("Fim de jogo.")
+
                 jogo_ativo = False
 
-            else:
-                print("\nFim do turno.")
+            elif resultado_palpite == "invalido":
+                print(f"\n{resultado}")
 
-                equipe_atual = equipe_adversaria
-
-                print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
-        elif resultado_palpite == "derrota":
-            print(f"\nA equipe {equipe_atual.upper()} encontrou o ASSASSINO!")
-            print("Fim de jogo.")
-
-            jogo_ativo = False
-
-        elif resultado_palpite == "invalido":
-            print(f"\n{resultado}")
-
-        exibir_tabuleiro(tabuleiro, modo_mestre=False)
+            exibir_tabuleiro(tabuleiro, modo_mestre=False)
 
 main()

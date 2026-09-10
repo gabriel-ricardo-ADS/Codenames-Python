@@ -21,3 +21,11 @@ def verificar_palpite(categoria, equipe_atual):
         return "fim_turno"
 
     return "invalido"
+
+def verificar_vitoria(tabuleiro, equipe):
+    for linha in tabuleiro:
+        for carta in linha:
+            if carta["categoria"] == equipe and not carta["revelada"]:
+                return False
+
+    return True

@@ -1,7 +1,7 @@
 from palavras import lista_palavras, sortear_palavras
 from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro
 from tabuleiro import revelar_palavra
-from jogo import trocar_turno, verificar_palpite
+from jogo import trocar_turno, verificar_palpite, verificar_vitoria
 
 def main():
     print("=" * 40)
@@ -39,7 +39,12 @@ def main():
 
         if resultado_palpite == "acerto":
             print(f"\nAcertou uma palavra da equipe {equipe_atual.upper()}!")
-            print("A equipe pode continuar jogando.")
+
+            if verificar_vitoria(tabuleiro, equipe_atual):
+                print(f"A equipe {equipe_atual.upper()} venceu!")
+                jogo_ativo = False
+            else:
+                print("A equipe pode continuar jogando.")
 
         elif resultado_palpite == "fim_turno":
             print("\nFim do turno.")

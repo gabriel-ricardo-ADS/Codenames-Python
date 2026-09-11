@@ -86,36 +86,41 @@ def exibir_tabuleiro(tabuleiro: list[list[dict]], modo_mestre: bool = False) -> 
         modo_mestre: Se True, exibe o mapa secreto com todas as cores visíveis.
     """
     print("=" * 95)
+
     if modo_mestre:
         print(" " * 35 + "MAPA SECRETO DO MESTRE")
     else:
         print(" " * 38 + "TABULEIRO DO JOGO")
+
     print("=" * 95)
 
     for linha in tabuleiro:
         linha_str = ""
-        for carta in linha:
-            if carta["revelada"]:
-                texto = f"X {carta['palavra']}"
-            else:
-                texto = carta["palavra"]
 
-            texto_alinhado = texto.center(13)
+        for carta in linha:
+            texto_alinhado = carta["palavra"].center(13)
+
             if modo_mestre:
                 cor = obter_cor_categoria(carta["categoria"])
+
                 if carta["revelada"]:
                     texto_carta = f"\033[47m{cor}{texto_alinhado}{COR_RESET}"
                 else:
                     texto_carta = f"{cor}{texto_alinhado}{COR_RESET}"
+
             elif carta["revelada"]:
                 cor = obter_cor_categoria(carta["categoria"])
-                texto_carta = f"{cor}{texto_alinhado}{COR_RESET}"
+                texto_carta = f"\033[47m{cor}{texto_alinhado}{COR_RESET}"
+
             else:
                 texto_carta = texto_alinhado
+
             linha_str += f"[ {texto_carta} ] "
+
         print(linha_str)
 
     print("=" * 95)
+
     if modo_mestre:
         print(f"Legenda: {COR_VERMELHO}Vermelho{COR_RESET} | {COR_AZUL}Azul{COR_RESET} | {COR_NEUTRO}Neutro{COR_RESET} | {COR_ASSASSINO}Assassino{COR_RESET} | \033[47;30mFundo Branco\033[0m = Revelada")
         print("=" * 95)

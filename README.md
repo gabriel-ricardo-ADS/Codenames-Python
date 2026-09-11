@@ -1,83 +1,148 @@
 # Codenames Python
 
-Implementação do jogo **Codenames** desenvolvida em Python como projeto acadêmico em grupo.
+Implementação do jogo **Codenames** desenvolvida em Python como projeto acadêmico da disciplina de **Computational Thinking Using Python** da FIAP.
+
+O projeto recria a dinâmica principal do Codenames para execução diretamente pelo terminal, utilizando conceitos fundamentais de lógica de programação, modularização e estruturas de dados em Python.
+
+---
 
 ## 👥 Equipe
 
-* Gabriel Ricardo
-* Pedro Limeis
-* Ana Clara Magalhães
+- Ana Clara Pereira de Magalhães — RM560871
+- Gabriel Ricardo Gomes Lima — RM572279
+- Pedro Henrique de Lima Reis — RM569178
+
+---
 
 ## 🎯 Objetivo
 
-Desenvolver uma versão funcional do jogo **Codenames** utilizando Python, aplicando conceitos de:
+Desenvolver uma versão funcional do jogo **Codenames** utilizando Python, aplicando conceitos estudados durante a disciplina, como:
 
-* lógica de programação;
-* funções;
-* estruturas condicionais;
-* estruturas de repetição;
-* listas e dicionários;
-* modularização de código;
-* validação de entradas;
-* organização de projeto;
-* versionamento com Git;
-* colaboração utilizando GitHub.
+- lógica de programação;
+- funções;
+- parâmetros e retornos;
+- estruturas condicionais;
+- estruturas de repetição;
+- listas;
+- dicionários;
+- modularização;
+- tratamento e validação de entradas;
+- organização de código;
+- Git e GitHub;
+- desenvolvimento colaborativo.
 
-O projeto será desenvolvido de forma incremental, priorizando inicialmente o funcionamento das principais regras do jogo.
+---
 
 ## 🎮 Sobre o jogo
 
-Codenames é um jogo de palavras disputado entre duas equipes.
+Codenames é um jogo de associação de palavras disputado entre duas equipes:
 
-Durante a partida, palavras são distribuídas em um tabuleiro e associadas secretamente a diferentes categorias:
+- 🔴 Equipe Vermelha
+- 🔵 Equipe Azul
 
-* equipe vermelha;
-* equipe azul;
-* palavras neutras;
-* assassino.
+Cada equipe possui um **Mestre-Espião**, responsável por fornecer pistas para os demais jogadores.
 
-O mestre de cada equipe fornece pistas relacionadas às palavras pertencentes ao seu time.
+Durante a partida, são sorteadas **25 palavras**, organizadas em um tabuleiro 5x5.
 
-Os jogadores devem utilizar essas pistas para descobrir corretamente suas palavras, evitando palavras da equipe adversária, palavras neutras e principalmente o assassino.
+Cada palavra pertence secretamente a uma das seguintes categorias:
 
-## ⚙️ Funcionalidades planejadas
+- Equipe Vermelha;
+- Equipe Azul;
+- Neutra;
+- Assassino.
 
-O projeto deverá possuir inicialmente:
+Os Mestres-Espiões conseguem visualizar a identidade de todas as cartas, enquanto os demais jogadores visualizam apenas as palavras.
 
-* criação do tabuleiro;
-* seleção aleatória das palavras;
-* divisão das palavras entre as equipes;
-* identificação de palavras neutras;
-* definição da palavra assassina;
-* gerenciamento das equipes;
-* controle dos turnos;
-* registro das pistas;
-* processamento dos palpites;
-* validação das escolhas;
-* atualização do estado do tabuleiro;
-* condição de vitória;
-* condição de derrota ao escolher o assassino;
-* possibilidade de iniciar uma nova partida.
+---
 
-## 🛠 Tecnologias
+## 🕵️ Como funciona
 
-* Python
-* Git
-* GitHub
+Em cada turno, o Mestre-Espião da equipe fornece:
 
-## 📁 Estrutura planejada
+```text
+PISTA + QUANTIDADE
+```
 
-A estrutura será definida conforme o desenvolvimento avançar, evitando criar módulos desnecessários antes de existir uma responsabilidade clara para eles.
+Exemplo:
 
-Estrutura inicial prevista:
+```text
+OCEANO 3
+```
+
+A pista deve possuir relação com uma ou mais palavras presentes no tabuleiro.
+
+A equipe então tenta descobrir quais palavras estão relacionadas à pista fornecida.
+
+Ao escolher uma palavra:
+
+- se pertencer à própria equipe, o time pode continuar jogando;
+- se pertencer à equipe adversária, o turno termina;
+- se for neutra, o turno termina;
+- se for o assassino, a equipe perde imediatamente;
+- se todas as palavras de uma equipe forem reveladas, ela vence a partida.
+
+Os jogadores também podem utilizar a opção:
+
+```text
+passar
+```
+
+para encerrar voluntariamente o turno.
+
+---
+
+## ✅ Funcionalidades implementadas
+
+- cadastro de 4 a 10 jogadores;
+- validação dos nomes dos jogadores;
+- divisão dos jogadores entre as equipes;
+- escolha dos Mestres-Espiões;
+- sorteio da equipe inicial;
+- sorteio aleatório de 25 palavras;
+- geração das categorias das cartas;
+- tabuleiro 5x5;
+- visão normal dos jogadores;
+- mapa secreto dos Mestres-Espiões;
+- diferenciação das cartas por cores;
+- identificação permanente das cartas já reveladas;
+- sistema de pistas;
+- quantidade de palavras associadas à pista;
+- sistema de palpites;
+- controle de palpites restantes;
+- opção de passar o turno;
+- alternância automática de turnos;
+- tratamento de palavra neutra;
+- tratamento de palavra adversária;
+- derrota ao selecionar o assassino;
+- condição de vitória;
+- validação de palavras inexistentes;
+- validação de palavras já reveladas;
+- limpeza do terminal entre a visão dos Mestres e dos jogadores.
+
+---
+
+## 🛠 Tecnologias utilizadas
+
+- Python
+- Git
+- GitHub
+- Visual Studio Code
+
+O projeto utiliza apenas recursos da biblioteca padrão do Python, sem necessidade de instalar bibliotecas externas.
+
+---
+
+## 📁 Estrutura do projeto
 
 ```text
 Codenames-Python/
 │
 ├── src/
-│   └── main.py
-│
-├── tests/
+│   ├── main.py
+│   ├── jogo.py
+│   ├── jogadores.py
+│   ├── palavras.py
+│   └── tabuleiro.py
 │
 ├── docs/
 │
@@ -86,44 +151,94 @@ Codenames-Python/
 └── README.md
 ```
 
-Novos módulos poderão ser adicionados dentro de `src/` conforme as funcionalidades forem implementadas.
+### Principais arquivos
 
-## 🌿 Organização das branches
+`main.py`  
+Responsável por integrar os módulos e controlar o fluxo principal da partida.
 
-O desenvolvimento será feito utilizando branches separadas para cada funcionalidade.
+`jogo.py`  
+Contém funções relacionadas às regras, turnos, palpites e condições de vitória.
 
-Branch principal:
+`jogadores.py`  
+Responsável pelo cadastro, divisão das equipes, escolha dos Mestres-Espiões e sorteio da equipe inicial.
 
-```text
-main
+`palavras.py`  
+Contém o banco de palavras utilizado nas partidas e o sorteio das palavras.
+
+`tabuleiro.py`  
+Responsável pela criação, exibição e atualização do tabuleiro.
+
+---
+
+## ▶️ Como executar
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/gabriel-ricardo-ADS/Codenames-Python.git
 ```
 
-Branch de integração:
+### 2. Entre na pasta
 
-```text
-develop
+```bash
+cd Codenames-Python
 ```
 
-Exemplos de branches de desenvolvimento:
+### 3. Execute o jogo
 
-```text
-feature/criacao-tabuleiro
-feature/equipes
-feature/sistema-turnos
-feature/palpites
+```bash
+python src/main.py
 ```
 
-Fluxo esperado:
+Também é possível abrir o projeto no Visual Studio Code:
+
+```bash
+code .
+```
+
+e executar o arquivo:
+
+```text
+src/main.py
+```
+
+---
+
+## 🎲 Requisitos para jogar
+
+- Python 3 instalado;
+- terminal compatível com cores ANSI;
+- mínimo de 4 jogadores;
+- máximo de 10 jogadores.
+
+Não é necessário instalar dependências externas.
+
+---
+
+## 🌿 Git Flow
+
+O desenvolvimento do projeto foi realizado utilizando branches para separar funcionalidades.
 
 ```text
 feature/* → develop → main
 ```
 
-A branch `develop` será utilizada para reunir e testar as funcionalidades antes da integração com a `main`.
+### Branches
+
+`main`  
+Versão estável do projeto.
+
+`develop`  
+Branch utilizada para integração das funcionalidades.
+
+`feature/*`  
+Branches utilizadas para desenvolvimento de funcionalidades específicas.
+
+---
 
 ## 📝 Padrão de commits
 
-Sempre que possível, serão utilizados commits curtos e descritivos.
+Foram utilizados commits curtos e descritivos.
 
 Exemplos:
 
@@ -132,53 +247,43 @@ feat: implementa criação do tabuleiro
 feat: adiciona sistema de equipes
 fix: corrige troca de turno
 fix: valida palavra já escolhida
-refactor: separa validação de palpites
-docs: atualiza README
+refactor: organiza funções do jogo
+docs: atualiza documentação
 ```
 
-## ▶️ Como executar
+---
 
-Após a implementação inicial do projeto:
+## 📄 Documentação
 
-```bash
-git clone https://github.com/gabriel-ricardo-ADS/Codenames-Python.git
-```
+A documentação acadêmica completa do projeto apresenta:
 
-Entre na pasta do projeto:
+- identificação da equipe;
+- funcionamento do Codenames;
+- principais regras;
+- instruções para execução do projeto.
 
-```bash
-cd Codenames-Python
-```
+### Documento completo
 
-Execute o programa:
+> 📎 **[Clique aqui para acessar a documentação completa](docs/documentacao-codenames.pdf)**
 
-```bash
-python src/main.py
-```
+---
 
-> Os comandos poderão ser atualizados conforme a estrutura definitiva do projeto for criada.
+## 🔗 Links
 
-## 🚧 Status do projeto
+- Repositório: https://github.com/gabriel-ricardo-ADS/Codenames-Python
+- Codenames: https://codenames.game/
 
-**Em desenvolvimento.**
+---
 
-Atualmente o projeto está em sua fase inicial de organização e definição da estrutura.
+## 📚 Disciplina
 
-O primeiro objetivo será construir o núcleo funcional do Codenames antes da implementação de funcionalidades adicionais.
+**Computational Thinking Using Python**
 
-## 📌 Prioridades de desenvolvimento
+Curso: Análise e Desenvolvimento de Sistemas — FIAP  
+Turma: 1TDSPF  
+Professor: Fernando Luiz de Almeida
 
-1. Estrutura inicial do projeto
-2. Banco de palavras
-3. Criação do tabuleiro
-4. Distribuição das palavras entre equipes, neutras e assassino
-5. Equipes e jogadores
-6. Sistema de turnos
-7. Pistas
-8. Palpites
-9. Condições de vitória e derrota
-10. Validações e testes
-11. Melhorias e funcionalidades adicionais
+---
 
 ## 📄 Licença
 

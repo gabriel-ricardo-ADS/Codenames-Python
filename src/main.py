@@ -46,23 +46,13 @@ def main() -> None:
         print("\nJogo encerrado.")
         return
 
-    # Cadastro dos jogadores
     jogadores = cadastrar_jogadores()
-
-    # Divisão das equipes
     equipe_vermelha, equipe_azul = dividir_equipes(jogadores)
-
-    # Escolha dos mestres-espiões
     mestre_vermelho = escolher_mestre(equipe_vermelha, "VERMELHA")
     mestre_azul = escolher_mestre(equipe_azul, "AZUL")
-
-    # Sorteia quem inicia o jogo
     equipe_inicial = definir_equipe_inicial()
-
-    # Sorteia as palavras da partida
     palavras_partida = sortear_palavras(lista_palavras, 25)
 
-    # Define as categorias e equipe atual de acordo com quem começa
     if equipe_inicial == "VERMELHA":
         categorias_geradas = gerar_categorias(False, True)
         equipe_atual = "vermelho"
@@ -70,7 +60,6 @@ def main() -> None:
         categorias_geradas = gerar_categorias(True, False)
         equipe_atual = "azul"
 
-    # Cria o tabuleiro
     tabuleiro = estrutura_tabuleiro(palavras_partida, categorias_geradas)
 
     jogo_ativo = True

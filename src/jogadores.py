@@ -7,16 +7,11 @@ VERDE = "\033[32m"
 RESET = "\033[0m"
 
 #[CADASTRO]
-#[CADASTRO]
 def cadastrar_jogadores() -> list[dict]:
     """Solicita a quantidade e os nomes dos jogadores para cadastro.
 
     Returns:
         Uma lista de dicionários contendo os dados de cada jogador cadastrado.
-
-    Raises:
-        ValueError: Se o número de jogadores for inferior a 4 ou superior a 10,
-            ou se um nome fornecido for vazio ou duplicado.
     """
     #Listinha para guardar informações dos players
     jogadores = []
@@ -158,9 +153,6 @@ def escolher_mestre(equipe: list[dict], nome_equipe: str) -> dict:
 
     Returns:
         O dicionário do jogador definido como mestre-espião.
-
-    Raises:
-        ValueError: Se o nome do mestre for vazio ou se o jogador não pertencer à equipe.
     """
     cor_equipe = definir_cor(nome_equipe)
     while True:

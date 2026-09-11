@@ -48,8 +48,8 @@ def main() -> None:
 
     jogadores = cadastrar_jogadores()
     equipe_vermelha, equipe_azul = dividir_equipes(jogadores)
-    mestre_vermelho = escolher_mestre(equipe_vermelha, "VERMELHA")
-    mestre_azul = escolher_mestre(equipe_azul, "AZUL")
+    escolher_mestre(equipe_vermelha, "VERMELHA")
+    escolher_mestre(equipe_azul, "AZUL")
     input("\nMestres-espiões definidos! Pressione Enter para continuar...")
     equipe_inicial = definir_equipe_inicial()
     palavras_partida = sortear_palavras(lista_palavras, 25)

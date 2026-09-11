@@ -103,5 +103,14 @@ lista_palavras = [
     "CAVALO"
 ]
 
-def sortear_palavras(list_pal, quantidade):
-    return random.sample(list_pal, quantidade) # sample = aleatorio mas sem repetir, diferente de choice() que pode escolher a mesma palavra mais de uma vez
+def sortear_palavras(list_pal: list[str], quantidade: int) -> list[str]:
+    """Sorteia uma quantidade de palavras aleatórias sem repetição.
+
+    Args:
+        list_pal: Uma lista contendo todas as palavras disponíveis para o jogo.
+        quantidade: O número de palavras que devem ser sorteadas.
+
+    Returns:
+        Uma lista contendo as palavras sorteadas aleatoriamente.
+    """
+    return random.sample(list_pal, quantidade)

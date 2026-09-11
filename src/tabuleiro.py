@@ -1,6 +1,15 @@
 from random import shuffle
 
-def gerar_categorias(jogador_azul,jogador_vermelho):
+def gerar_categorias(jogador_azul: bool, jogador_vermelho: bool) -> list[str]:
+    """Gera e embaralha a lista de categorias das cartas do tabuleiro.
+
+    Args:
+        jogador_azul: Booleano indicando se a equipe azul inicia a partida.
+        jogador_vermelho: Booleano indicando se a equipe vermelha inicia a partida.
+
+    Returns:
+        Uma lista embaralhada contendo as 25 categorias da partida.
+    """
     lista_cat = ["assasino"]
     if jogador_azul:
         for c in range(9):
@@ -19,7 +28,16 @@ def gerar_categorias(jogador_azul,jogador_vermelho):
 
     return lista_cat
 
-def estrutura_tabuleiro(palavras, categorias):
+def estrutura_tabuleiro(palavras: list[str], categorias: list[str]) -> list[list[dict]]:
+    """Monta a matriz 5x5 do tabuleiro com palavras, categorias e estado de revelação.
+
+    Args:
+        palavras: Lista com as 25 palavras sorteadas.
+        categorias: Lista com as 25 categorias correspondentes.
+
+    Returns:
+        Uma matriz 5x5 onde cada elemento é um dicionário representando uma carta.
+    """
     matriz = []
     indice = 0
     for l in range(5):
@@ -41,7 +59,15 @@ COR_AZUL = "\033[94;1m"         # Azul brilhante/negrito
 COR_NEUTRO = "\033[90m"         # Cinza escuro (Neutro)
 COR_ASSASSINO = "\033[95;1m" # Texto roxo/magenta (sem fundo)
 
-def obter_cor_categoria(categoria):
+def obter_cor_categoria(categoria: str) -> str:
+    """Retorna o código de cor ANSI correspondente à categoria da carta.
+
+    Args:
+        categoria: Nome da categoria ("vermelho", "azul", "neutro", "assasino").
+
+    Returns:
+        O código de escape ANSI relativo à cor da categoria.
+    """
     if categoria == "vermelho":
         return COR_VERMELHO
     elif categoria == "azul":
@@ -52,7 +78,13 @@ def obter_cor_categoria(categoria):
         return COR_ASSASSINO
     return COR_RESET
 
-def exibir_tabuleiro(tabuleiro, modo_mestre=False):
+def exibir_tabuleiro(tabuleiro: list[list[dict]], modo_mestre: bool = False) -> None:
+    """Exibe o tabuleiro formatado no terminal.
+
+    Args:
+        tabuleiro: Matriz 5x5 representando as cartas do jogo.
+        modo_mestre: Se True, exibe o mapa secreto com todas as cores visíveis.
+    """
     print("=" * 95)
     if modo_mestre:
         print(" " * 35 + "MAPA SECRETO DO MESTRE")
@@ -83,7 +115,16 @@ def exibir_tabuleiro(tabuleiro, modo_mestre=False):
         print(f"Legenda: {COR_VERMELHO}Vermelho{COR_RESET} | {COR_AZUL}Azul{COR_RESET} | {COR_NEUTRO}Neutro{COR_RESET} | {COR_ASSASSINO}Assassino{COR_RESET} | \033[47;30mFundo Branco\033[0m = Revelada")
         print("=" * 95)
 
-def revelar_palavra(tabuleiro, palavra_buscada):
+def revelar_palavra(tabuleiro: list[list[dict]], palavra_buscada: str) -> str:
+    """Procura uma palavra no tabuleiro e altera seu estado para revelada.
+
+    Args:
+        tabuleiro: Matriz 5x5 do tabuleiro de jogo.
+        palavra_buscada: A palavra enviada pela equipe para palpite.
+
+    Returns:
+        A categoria da palavra revelada, ou uma mensagem de erro/aviso.
+    """
     palavra_buscada = palavra_buscada.strip().upper()
     for linha in tabuleiro:
         for carta in linha:

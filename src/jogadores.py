@@ -7,7 +7,17 @@ VERDE = "\033[32m"
 RESET = "\033[0m"
 
 #[CADASTRO]
-def cadastrar_jogadores():
+#[CADASTRO]
+def cadastrar_jogadores() -> list[dict]:
+    """Solicita a quantidade e os nomes dos jogadores para cadastro.
+
+    Returns:
+        Uma lista de dicionários contendo os dados de cada jogador cadastrado.
+
+    Raises:
+        ValueError: Se o número de jogadores for inferior a 4 ou superior a 10,
+            ou se um nome fornecido for vazio ou duplicado.
+    """
     #Listinha para guardar informações dos players
     jogadores = []
 
@@ -82,7 +92,15 @@ def cadastrar_jogadores():
     return jogadores
 
 #[DIVISAO DE EQUIPES]
-def dividir_equipes(jogadores):
+def dividir_equipes(jogadores: list[dict]) -> tuple[list[dict], list[dict]]:
+    """Divide a lista de jogadores entre a equipe vermelha e a equipe azul.
+
+    Args:
+        jogadores: Uma lista com todos os jogadores cadastrados.
+
+    Returns:
+        Uma tupla contendo duas listas de dicionários: (equipe_vermelha, equipe_azul).
+    """
     #Equipes!
     equipe_vermelha = []
     equipe_azul = []
@@ -112,7 +130,15 @@ def dividir_equipes(jogadores):
     #Retorna as duas equipes já separadas
     return equipe_vermelha, equipe_azul
 
-def definir_cor(nome_equipe):
+def definir_cor(nome_equipe: str) -> str:
+    """Retorna a constante de cor ANSI correspondente ao nome da equipe.
+
+    Args:
+        nome_equipe: Nome da equipe ("VERMELHA" ou "AZUL").
+
+    Returns:
+        O código ANSI correspondente à cor da equipe.
+    """
     if nome_equipe == "VERMELHA":
         return VERMELHO
 
@@ -123,8 +149,19 @@ def definir_cor(nome_equipe):
         return RESET
 
 
-def escolher_mestre(equipe, nome_equipe):
+def escolher_mestre(equipe: list[dict], nome_equipe: str) -> dict:
+    """Solicita a escolha do mestre-espião dentro de uma equipe.
 
+    Args:
+        equipe: Lista de jogadores pertencentes à equipe.
+        nome_equipe: Nome da equipe selecionada ("VERMELHA" ou "AZUL").
+
+    Returns:
+        O dicionário do jogador definido como mestre-espião.
+
+    Raises:
+        ValueError: Se o nome do mestre for vazio ou se o jogador não pertencer à equipe.
+    """
     cor_equipe = definir_cor(nome_equipe)
     while True:
         try:
@@ -169,7 +206,12 @@ def escolher_mestre(equipe, nome_equipe):
             return mestre_encontrado
 
 #[RANDOMIZACAO DA EQUIPE INICIAL]
-def definir_equipe_inicial():
+def definir_equipe_inicial() -> str:
+    """Sorteia aleatoriamente qual equipe iniciará a partida.
+
+    Returns:
+        O nome da equipe sorteada ("VERMELHA" ou "AZUL").
+    """
     #Sorteia qual equipe ira começar a partida
     equipe_inicial = random.choice(["VERMELHA", "AZUL"])
 

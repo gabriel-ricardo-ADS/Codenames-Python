@@ -6,7 +6,15 @@ from jogo import trocar_turno, verificar_palpite, verificar_vitoria, menu_inicia
 from jogadores import cadastrar_jogadores, dividir_equipes, escolher_mestre, definir_equipe_inicial, VERDE, VERMELHO, AZUL, RESET
 
 
-def formatar_equipe(equipe):
+def formatar_equipe(equipe: str) -> str:
+    """Formata o nome da equipe com a respectiva cor ANSI (vermelho ou azul).
+
+    Args:
+        equipe: O nome da equipe ("vermelho", "VERMELHA", "azul", etc.).
+
+    Returns:
+        O nome da equipe formatado em maiúsculas acompanhado de sua cor ANSI.
+    """
     if equipe.upper() in ["VERMELHA", "VERMELHO"]:
         return f"{VERMELHO}{equipe.upper()}{RESET}"
     elif equipe.upper() in ["AZUL"]:
@@ -14,7 +22,8 @@ def formatar_equipe(equipe):
     return equipe.upper()
 
 
-def main():
+def main() -> None:
+    """Função principal que executa o fluxo do jogo Codenames."""
     print("=" * 40)
     print(f"          CODENAMES - {VERDE}PYTHON{RESET}")
     print("=" * 40)

@@ -53,11 +53,17 @@ def estrutura_tabuleiro(palavras: list[str], categorias: list[str]) -> list[list
         matriz.append(linha)
     return matriz
 
-COR_RESET = "\033[0m"
-COR_VERMELHO = "\033[91;1m"     # Vermelho brilhante/negrito
-COR_AZUL = "\033[94;1m"         # Azul brilhante/negrito
-COR_NEUTRO = "\033[90m"         # Cinza escuro (Neutro)
-COR_ASSASSINO = "\033[95;1m" # Texto roxo/magenta (sem fundo)
+COR_RESET = "\033[0m"             # Reseta todas as cores e estilos
+
+COR_VERMELHO = "\033[91;1m"       # Texto vermelho brilhante/negrito
+COR_AZUL = "\033[94;1m"           # Texto azul brilhante/negrito
+COR_NEUTRO = "\033[90m"           # Texto cinza escuro
+COR_ASSASSINO = "\033[95;1m"      # Texto roxo/magenta brilhante
+
+FUNDO_VERMELHO = "\033[41;97;1m"  # Fundo vermelho com texto branco/negrito
+FUNDO_AZUL = "\033[44;97;1m"      # Fundo azul com texto branco/negrito
+FUNDO_NEUTRO = "\033[100;97;1m"   # Fundo cinza com texto branco/negrito
+FUNDO_ASSASSINO = "\033[45;97;1m" # Fundo roxo/magenta com texto branco/negrito
 
 def obter_cor_categoria(categoria: str) -> str:
     """Retorna o código de cor ANSI correspondente à categoria da carta.
@@ -100,17 +106,25 @@ def exibir_tabuleiro(tabuleiro: list[list[dict]], modo_mestre: bool = False) -> 
         for carta in linha:
             texto_alinhado = carta["palavra"].center(13)
 
-            if modo_mestre:
-                cor = obter_cor_categoria(carta["categoria"])
+            if carta["revelada"]:
+                if carta["categoria"] == "vermelho":
+                    texto_carta = f"{FUNDO_VERMELHO}{texto_alinhado}{COR_RESET}"
 
-                if carta["revelada"]:
-                    texto_carta = f"\033[47m{cor}{texto_alinhado}{COR_RESET}"
+                elif carta["categoria"] == "azul":
+                    texto_carta = f"{FUNDO_AZUL}{texto_alinhado}{COR_RESET}"
+
+                elif carta["categoria"] == "neutro":
+                    texto_carta = f"{FUNDO_NEUTRO}{texto_alinhado}{COR_RESET}"
+
+                elif carta["categoria"] == "assasino":
+                    texto_carta = f"{FUNDO_ASSASSINO}{texto_alinhado}{COR_RESET}"
+
                 else:
-                    texto_carta = f"{cor}{texto_alinhado}{COR_RESET}"
+                    texto_carta = texto_alinhado
 
-            elif carta["revelada"]:
+            elif modo_mestre:
                 cor = obter_cor_categoria(carta["categoria"])
-                texto_carta = f"\033[47m{cor}{texto_alinhado}{COR_RESET}"
+                texto_carta = f"{cor}{texto_alinhado}{COR_RESET}"
 
             else:
                 texto_carta = texto_alinhado
@@ -122,7 +136,7 @@ def exibir_tabuleiro(tabuleiro: list[list[dict]], modo_mestre: bool = False) -> 
     print("=" * 95)
 
     if modo_mestre:
-        print(f"Legenda: {COR_VERMELHO}Vermelho{COR_RESET} | {COR_AZUL}Azul{COR_RESET} | {COR_NEUTRO}Neutro{COR_RESET} | {COR_ASSASSINO}Assassino{COR_RESET} | \033[47;30mFundo Branco\033[0m = Revelada")
+        print(f"Legenda: {COR_VERMELHO}Vermelho{COR_RESET} | {COR_AZUL}Azul{COR_RESET} | {COR_NEUTRO}Neutro{COR_RESET} | {COR_ASSASSINO}Assassino{COR_RESET}")
         print("=" * 95)
 
 def revelar_palavra(tabuleiro: list[list[dict]], palavra_buscada: str) -> str:

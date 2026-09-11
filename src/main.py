@@ -163,7 +163,10 @@ def main() -> None:
                     jogo_ativo = False
 
                 else:
-                    print("\nFim do turno.")
+                    if resultado == "neutro":
+                        print("\nVocê escolheu uma palavra NEUTRA! O turno foi encerrado.")
+                    else:
+                        print(f"\nVocê escolheu uma palavra da equipe {formatar_equipe(equipe_adversaria)}! Ponto para eles e turno encerrado.")
 
                     equipe_atual = equipe_adversaria
 
@@ -174,8 +177,9 @@ def main() -> None:
                 break
 
             elif resultado_palpite == "derrota":
+                equipe_adversaria = trocar_turno(equipe_atual)
                 print(f"\nA equipe {formatar_equipe(equipe_atual)} encontrou o ASSASSINO!")
-                print("Fim de jogo.")
+                print(f"Fim de jogo! A equipe {formatar_equipe(equipe_adversaria)} venceu a partida!")
 
                 jogo_ativo = False
 

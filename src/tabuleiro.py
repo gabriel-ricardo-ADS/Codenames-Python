@@ -39,7 +39,7 @@ COR_RESET = "\033[0m"
 COR_VERMELHO = "\033[91;1m"     # Vermelho brilhante/negrito
 COR_AZUL = "\033[94;1m"         # Azul brilhante/negrito
 COR_NEUTRO = "\033[90m"         # Cinza escuro (Neutro)
-COR_ASSASSINO = "\033[41;97;1m" # Fundo vermelho com texto branco brilhante
+COR_ASSASSINO = "\033[95;1m" # Texto roxo/magenta (sem fundo)
 
 def obter_cor_categoria(categoria):
     if categoria == "vermelho":
@@ -63,8 +63,14 @@ def exibir_tabuleiro(tabuleiro, modo_mestre=False):
     for linha in tabuleiro:
         linha_str = ""
         for carta in linha:
-            texto_alinhado = carta["palavra"].ljust(13)
-            if modo_mestre or carta["revelada"]:
+            texto_alinhado = carta["palavra"].center(13)
+            if modo_mestre:
+                cor = obter_cor_categoria(carta["categoria"])
+                if carta["revelada"]:
+                    texto_carta = f"\033[47m{cor}{texto_alinhado}{COR_RESET}"
+                else:
+                    texto_carta = f"{cor}{texto_alinhado}{COR_RESET}"
+            elif carta["revelada"]:
                 cor = obter_cor_categoria(carta["categoria"])
                 texto_carta = f"{cor}{texto_alinhado}{COR_RESET}"
             else:
@@ -74,7 +80,7 @@ def exibir_tabuleiro(tabuleiro, modo_mestre=False):
 
     print("=" * 95)
     if modo_mestre:
-        print(f"Legenda: {COR_VERMELHO}Vermelho{COR_RESET} | {COR_AZUL}Azul{COR_RESET} | {COR_NEUTRO}Neutro{COR_RESET} | {COR_ASSASSINO} ASSASSINO {COR_RESET}")
+        print(f"Legenda: {COR_VERMELHO}Vermelho{COR_RESET} | {COR_AZUL}Azul{COR_RESET} | {COR_NEUTRO}Neutro{COR_RESET} | {COR_ASSASSINO}Assassino{COR_RESET} | \033[47;30mFundo Branco\033[0m = Revelada")
         print("=" * 95)
 
 def revelar_palavra(tabuleiro, palavra_buscada):

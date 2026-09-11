@@ -3,7 +3,15 @@ import os
 from palavras import lista_palavras, sortear_palavras
 from tabuleiro import estrutura_tabuleiro, gerar_categorias, exibir_tabuleiro, revelar_palavra
 from jogo import trocar_turno, verificar_palpite, verificar_vitoria, menu_inicial, limpar_tela
-from jogadores import cadastrar_jogadores, dividir_equipes, escolher_mestre, definir_equipe_inicial, VERDE, RESET
+from jogadores import cadastrar_jogadores, dividir_equipes, escolher_mestre, definir_equipe_inicial, VERDE, VERMELHO, AZUL, RESET
+
+
+def formatar_equipe(equipe):
+    if equipe.upper() in ["VERMELHA", "VERMELHO"]:
+        return f"{VERMELHO}{equipe.upper()}{RESET}"
+    elif equipe.upper() in ["AZUL"]:
+        return f"{AZUL}{equipe.upper()}{RESET}"
+    return equipe.upper()
 
 
 def main():
@@ -72,9 +80,9 @@ def main():
         print("\n--- MAPA DOS MESTRES ---")
         exibir_tabuleiro(tabuleiro, modo_mestre=True)
 
-        print(f"\nTurno da equipe {equipe_atual.upper()}.")
+        print(f"\nTurno da equipe {formatar_equipe(equipe_atual)}.")
 
-        pista = input(f"Mestre da equipe {equipe_atual.upper()}, digite a pista: ").strip()
+        pista = input(f"Mestre da equipe {formatar_equipe(equipe_atual)}, digite a pista: ").strip()
 
         while True:
             try:
@@ -98,7 +106,7 @@ def main():
         print("              JOGADORES PODEM OLHAR")
         print("=" * 55)
 
-        print(f"\nEquipe da vez: {equipe_atual.upper()}")
+        print(f"\nEquipe da vez: {formatar_equipe(equipe_atual)}")
         print(f"Pista: {pista.upper()} | Quantidade: {quantidade}")
 
         print("\n--- TABULEIRO ---")
@@ -113,7 +121,7 @@ def main():
                 equipe_atual = trocar_turno(equipe_atual)
 
                 print("\nTurno encerrado.")
-                print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+                print(f"Agora é a vez da equipe {formatar_equipe(equipe_atual)}.")
 
                 break
 
@@ -121,10 +129,10 @@ def main():
             resultado_palpite = verificar_palpite(resultado, equipe_atual)
 
             if resultado_palpite == "acerto":
-                print(f"\nAcertou uma palavra da equipe {equipe_atual.upper()}!")
+                print(f"\nAcertou uma palavra da equipe {formatar_equipe(equipe_atual)}!")
 
                 if verificar_vitoria(tabuleiro, equipe_atual):
-                    print(f"A equipe {equipe_atual.upper()} venceu!")
+                    print(f"A equipe {formatar_equipe(equipe_atual)} venceu!")
                     jogo_ativo = False
 
                 else:
@@ -135,7 +143,7 @@ def main():
 
                         equipe_atual = trocar_turno(equipe_atual)
 
-                        print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+                        print(f"Agora é a vez da equipe {formatar_equipe(equipe_atual)}.")
 
                     else:
                         print("A equipe pode continuar jogando.")
@@ -144,8 +152,8 @@ def main():
                 equipe_adversaria = trocar_turno(equipe_atual)
 
                 if verificar_vitoria(tabuleiro, equipe_adversaria):
-                    print(f"\nA última palavra da equipe {equipe_adversaria.upper()} foi revelada!")
-                    print(f"A equipe {equipe_adversaria.upper()} venceu!")
+                    print(f"\nA última palavra da equipe {formatar_equipe(equipe_adversaria)} foi revelada!")
+                    print(f"A equipe {formatar_equipe(equipe_adversaria)} venceu!")
 
                     jogo_ativo = False
 
@@ -154,12 +162,12 @@ def main():
 
                     equipe_atual = equipe_adversaria
 
-                    print(f"Agora é a vez da equipe {equipe_atual.upper()}.")
+                    print(f"Agora é a vez da equipe {formatar_equipe(equipe_atual)}.")
 
                 break
 
             elif resultado_palpite == "derrota":
-                print(f"\nA equipe {equipe_atual.upper()} encontrou o ASSASSINO!")
+                print(f"\nA equipe {formatar_equipe(equipe_atual)} encontrou o ASSASSINO!")
                 print("Fim de jogo.")
 
                 jogo_ativo = False

@@ -95,7 +95,12 @@ def exibir_tabuleiro(tabuleiro: list[list[dict]], modo_mestre: bool = False) -> 
     for linha in tabuleiro:
         linha_str = ""
         for carta in linha:
-            texto_alinhado = carta["palavra"].center(13)
+            if carta["revelada"]:
+                texto = f"X {carta['palavra']}"
+            else:
+                texto = carta["palavra"]
+
+            texto_alinhado = texto.center(13)
             if modo_mestre:
                 cor = obter_cor_categoria(carta["categoria"])
                 if carta["revelada"]:

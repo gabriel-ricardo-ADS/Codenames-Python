@@ -50,8 +50,8 @@ def cadastrar_jogadores() -> list[dict]:
         while True:
 
             try:
-                #Recebimento de dados de cada jogador (strip para remoção de espaços)
-                nome = input(f'\nDigite o nome do jogador {i + 1}: ').strip()
+                #Recebimento de dados de cada jogador (strip para remoção de espaços e title para inicial maiúscula)
+                nome = input(f'\nDigite o nome do jogador {i + 1}: ').strip().title()
 
                 #Validação: Nome não pode ser vazio
                 if nome == '':
@@ -163,7 +163,7 @@ def escolher_mestre(equipe: list[dict], nome_equipe: str) -> dict:
             for jogador in equipe:
                 print(jogador["nome"])
 
-            nome_mestre = input('\nDigite o nome do mestre-espião: ').strip()
+            nome_mestre = input('\nDigite o nome do mestre-espião: ').strip().title()
 
             #Validação: Nome não pode ser vazio
             if nome_mestre == '':

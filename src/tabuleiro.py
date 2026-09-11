@@ -84,6 +84,26 @@ def obter_cor_categoria(categoria: str) -> str:
         return COR_ASSASSINO
     return COR_RESET
 
+def contar_cartas_restantes(tabuleiro: list[list[dict]]) -> tuple[int, int]:
+    """Conta quantas cartas não reveladas restam para as equipes vermelha e azul.
+
+    Args:
+        tabuleiro: Matriz 5x5 das cartas do jogo.
+
+    Returns:
+        Uma tupla contendo a quantidade de cartas restantes (vermelho, azul).
+    """
+    restantes_vermelho = 0
+    restantes_azul = 0
+    for linha in tabuleiro:
+        for carta in linha:
+            if not carta["revelada"]:
+                if carta["categoria"] == "vermelho":
+                    restantes_vermelho += 1
+                elif carta["categoria"] == "azul":
+                    restantes_azul += 1
+    return restantes_vermelho, restantes_azul
+
 def exibir_tabuleiro(tabuleiro: list[list[dict]], modo_mestre: bool = False) -> None:
     """Exibe o tabuleiro formatado no terminal.
 
@@ -135,9 +155,13 @@ def exibir_tabuleiro(tabuleiro: list[list[dict]], modo_mestre: bool = False) -> 
 
     print("=" * 95)
 
+    restantes_vermelho, restantes_azul = contar_cartas_restantes(tabuleiro)
+    print(f"Cartas Faltantes -> {COR_VERMELHO}Equipe Vermelha: {restantes_vermelho}{COR_RESET} | {COR_AZUL}Equipe Azul: {restantes_azul}{COR_RESET}")
+
     if modo_mestre:
         print(f"Legenda: {COR_VERMELHO}Vermelho{COR_RESET} | {COR_AZUL}Azul{COR_RESET} | {COR_NEUTRO}Neutro{COR_RESET} | {COR_ASSASSINO}Assassino{COR_RESET}")
-        print("=" * 95)
+
+    print("=" * 95)
 
 def revelar_palavra(tabuleiro: list[list[dict]], palavra_buscada: str) -> str:
     """Procura uma palavra no tabuleiro e altera seu estado para revelada.
